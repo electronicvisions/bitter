@@ -275,6 +275,46 @@ TEST(Bitset, Concat)
 		std::string complete = s.at(0)+s.at(1)+s.at(2);
 		ASSERT_EQ(complete, concat(type(s[0]), type(s[1]), type(s[2])).to_string());
 	);
+
+	{
+		auto x = b<1>("1");
+		auto y = false;
+		auto z = b<1>("1");
+		std::string complete = "101";
+		ASSERT_EQ(complete, concat(x, y, z).to_string());
+	}
+
+	{
+		auto x = false;
+		auto y = b<1>(0);
+		auto z = b<1>("1");
+		std::string complete = "001";
+		ASSERT_EQ(complete, concat(x, y, z).to_string());
+	}
+
+	{
+		auto x = b<1>("1");
+		auto y = b<1>(0);
+		auto z = true;
+		std::string complete = "101";
+		ASSERT_EQ(complete, concat(x, y, z).to_string());
+	}
+
+	{
+		auto x = b<1>("1");
+		auto y = false;
+		auto z = true;
+		std::string complete = "101";
+		ASSERT_EQ(complete, concat(x, y, z).to_string());
+	}
+
+	{
+		auto x = true;
+		auto y = false;
+		auto z = true;
+		std::string complete = "101";
+		ASSERT_EQ(complete, concat(x, y, z).to_string());
+	}
 }
 
 TEST(Bitset, Resize)

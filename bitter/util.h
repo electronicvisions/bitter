@@ -42,6 +42,7 @@ resize(bitset<N> const& t)
 	return std::bitset<Len>(t.to_ullong());
 }
 
+// copy lowest bits
 template<size_t Len, size_t N>
 typename std::enable_if<
 	(N>BITTER_BITS_PER_BYTE*sizeof(uintmax_t)),
@@ -52,6 +53,16 @@ resize(bitset<N> const& t)
 	size_t c = detail::min<Len, N>::value;
 	while (c--)
 		r[c] = t[c];
+	return r;
+}
+
+// copy bool value into the lowest bit (same as for bitset<1>)
+template<size_t Len>
+std::bitset<Len>
+resize(bool const& t)
+{
+	bitset<Len> r;
+	r[0] = t;
 	return r;
 }
 
@@ -91,12 +102,17 @@ bitset<N> concat(bitset<N> const& t)
 	return t;
 }
 
-template<size_t N, size_t ... Ns>
-bitset<detail::sum<N, Ns...>::value>
-concat(bitset<N> const& t, bitset<Ns> const& ... ts)
+inline bitset<1> concat(bool const& b)
 {
-	return resize<detail::sum<N, Ns...>::value>(t) << detail::sum<Ns...>::value
-		| resize<detail::sum<N, Ns...>::value>(concat(ts...));
+	return bitset<1>(b);
+}
+
+template<typename T, typename ... Ts>
+bitset<detail::sum<T, Ts...>::value>
+concat(T const& t, Ts const&... ts)
+{
+	return (resize<detail::sum<T, Ts...>::value>(t) << detail::sum<Ts...>::value
+		| resize<detail::sum<T, Ts...>::value>(concat(ts...)));
 }
 
 } // namespace bit

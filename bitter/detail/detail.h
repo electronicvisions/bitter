@@ -6,13 +6,30 @@
 namespace bit {
 namespace detail {
 
-template<size_t ... Ns>
+// set value to N for TYPE<N> or 1 for bool
+template<typename T>
+struct lengthOfBoolOrBitset;
+
+template<size_t N, template <size_t> class T>
+struct lengthOfBoolOrBitset<T<N>>
+{
+	enum : size_t { value = N };
+};
+
+template<>
+struct lengthOfBoolOrBitset<bool>
+{
+	enum : size_t { value = 1 };
+};
+
+// calculate sum of all bools and Ns in a pack of TYPE<N>
+template<typename ... Ts>
 struct sum;
 
-template<size_t N, size_t ... Ns>
-struct sum<N, Ns...>
+template<typename T, typename ... Ts>
+struct sum<T, Ts...>
 {
-	enum : size_t { value = N + sum<Ns...>::value };
+	enum : size_t { value = lengthOfBoolOrBitset<T>::value + sum<Ts...>::value };
 };
 
 template<>
