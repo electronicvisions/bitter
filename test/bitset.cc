@@ -259,9 +259,9 @@ TEST(Bitset, Conversion)
 TEST(Bitset, Concat)
 {
 	REPEAT(10000,
-		auto const r = random<size_t>(64);
-		ASSERT_EQ(b<16>(r), concat(b<3>(r<<13), b<8>(r<<5), b<5>(r)));
-		ASSERT_EQ(b<33>(r), concat(b<11>(r<<22), concat(b<11>(r<<11), b<11>(r))));
+		auto const r = random<size_t>(64ull);
+		ASSERT_EQ(b<16>(r), concat(b<3>(r>>13), b<8>(r>>5), b<5>(r)));
+		ASSERT_EQ(b<33>(r), concat(b<11>(r>>22), concat(b<11>(r>>11), b<11>(r))));
 	);
 
 	REPEAT(1000,
