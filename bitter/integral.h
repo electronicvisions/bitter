@@ -124,7 +124,7 @@ template<size_t Len, typename T>
 BITTER_IF_INTEGRAL(T, T)
 crop(T t, size_t offset = 0) noexcept
 {
-	return (t >> offset) & ~(~0 << Len);
+	return (t >> offset) & ~(~0ull << Len);
 }
 
 
