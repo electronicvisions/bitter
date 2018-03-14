@@ -27,7 +27,7 @@ std::string random_bit_string(size_t len)
 template<typename T>
 T random(size_t len = sizeof(T)*8)
 {
-	return rand() % (1<<len ? 1<<len : RAND_MAX);
+	return rand() % ((1<<len) > 0 ? (1<<len) : RAND_MAX);
 }
 
 template<size_t N>
