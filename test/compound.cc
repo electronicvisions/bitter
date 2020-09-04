@@ -48,7 +48,7 @@ BITTER_COMPOUND(D, (_x, 180), (_y, 113), (_z, 256));
 
 typedef ::testing::Types<A, B, C, D> CompoundTypes;
 
-TYPED_TEST_CASE(CompoundTest, CompoundTypes);
+TYPED_TEST_SUITE(CompoundTest, CompoundTypes);
 
 TYPED_TEST(CompoundTest, Size)
 {
